@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { AppLink } from "@/components/site/app-link";
 import { useSiteSettings } from "@/hooks/use-cms";
 import { SITE_SETTINGS } from "@/data/placeholder-content";
 
@@ -37,12 +37,12 @@ export function SiteFooter() {
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <Link
-                      to={link.href}
+                    <AppLink
+                      href={link.href}
                       className="text-sm text-primary-foreground/85 transition-colors hover:text-accent"
                     >
                       {link.label}
-                    </Link>
+                    </AppLink>
                   </li>
                 ))}
               </ul>

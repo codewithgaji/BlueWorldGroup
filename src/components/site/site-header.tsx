@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
+import { AppLink } from "@/components/site/app-link";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BrandGlobe } from "@/components/brand/brand-globe";
@@ -71,16 +72,16 @@ export function SiteHeader() {
             const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to.split("?")[0]!);
             if (!item.children) {
               return (
-                <Link
+                <AppLink
                   key={item.label}
-                  to={item.to}
+                  href={item.to}
                   className={cn(
                     "rounded-full px-4 py-2 text-sm font-semibold text-foreground/75 transition-colors hover:bg-primary-soft hover:text-primary-deep",
                     active && "text-primary-deep",
                   )}
                 >
                   {item.label}
-                </Link>
+                </AppLink>
               );
             }
             return (
@@ -98,13 +99,13 @@ export function SiteHeader() {
                 <div className="invisible absolute left-0 top-full w-64 translate-y-2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                   <div className="overflow-hidden rounded-2xl border border-border bg-card p-2 shadow-lift">
                     {item.children.map((child) => (
-                      <Link
+                      <AppLink
                         key={child.label}
-                        to={child.to}
+                        href={child.to}
                         className="block rounded-xl px-4 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-primary-soft hover:text-primary-deep"
                       >
                         {child.label}
-                      </Link>
+                      </AppLink>
                     ))}
                   </div>
                 </div>
@@ -163,27 +164,27 @@ export function SiteHeader() {
                     {openAccordion === item.label && (
                       <div className="space-y-1 pb-2 pl-3">
                         {item.children.map((child) => (
-                          <Link
+                          <AppLink
                             key={child.label}
-                            to={child.to}
+                            href={child.to}
                             onClick={() => setOpenMobile(false)}
                             className="block rounded-lg px-3 py-2.5 text-sm text-foreground/75"
                           >
                             {child.label}
-                          </Link>
+                          </AppLink>
                         ))}
                       </div>
                     )}
                   </div>
                 ) : (
-                  <Link
+                  <AppLink
                     key={item.label}
-                    to={item.to}
+                    href={item.to}
                     onClick={() => setOpenMobile(false)}
                     className="block rounded-xl px-3 py-3 text-sm font-semibold text-primary-deep"
                   >
                     {item.label}
-                  </Link>
+                  </AppLink>
                 ),
               )}
               <Link
