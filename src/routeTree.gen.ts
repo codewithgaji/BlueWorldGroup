@@ -10,33 +10,89 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutIndexRouteImport } from './routes/about.index'
+import { Route as AboutLeadershipRouteImport } from './routes/about.leadership'
+import { Route as AboutVisionMissionRouteImport } from './routes/about.vision-mission'
+import { Route as AboutWhoWeAreRouteImport } from './routes/about.who-we-are'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutIndexRoute = AboutIndexRouteImport.update({
+  id: '/about/',
+  path: '/about/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutLeadershipRoute = AboutLeadershipRouteImport.update({
+  id: '/about/leadership',
+  path: '/about/leadership',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutVisionMissionRoute = AboutVisionMissionRouteImport.update({
+  id: '/about/vision-mission',
+  path: '/about/vision-mission',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutWhoWeAreRoute = AboutWhoWeAreRouteImport.update({
+  id: '/about/who-we-are',
+  path: '/about/who-we-are',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about/leadership': typeof AboutLeadershipRoute
+  '/about/vision-mission': typeof AboutVisionMissionRoute
+  '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/about/': typeof AboutIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about/leadership': typeof AboutLeadershipRoute
+  '/about/vision-mission': typeof AboutVisionMissionRoute
+  '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/about': typeof AboutIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about/leadership': typeof AboutLeadershipRoute
+  '/about/vision-mission': typeof AboutVisionMissionRoute
+  '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/about/': typeof AboutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about/leadership'
+    | '/about/vision-mission'
+    | '/about/who-we-are'
+    | '/about/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about/leadership'
+    | '/about/vision-mission'
+    | '/about/who-we-are'
+    | '/about'
+  id:
+    | '__root__'
+    | '/'
+    | '/about/leadership'
+    | '/about/vision-mission'
+    | '/about/who-we-are'
+    | '/about/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutLeadershipRoute: typeof AboutLeadershipRoute
+  AboutVisionMissionRoute: typeof AboutVisionMissionRoute
+  AboutWhoWeAreRoute: typeof AboutWhoWeAreRoute
+  AboutIndexRoute: typeof AboutIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +104,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about/': {
+      id: '/about/'
+      path: '/about'
+      fullPath: '/about/'
+      preLoaderRoute: typeof AboutIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/leadership': {
+      id: '/about/leadership'
+      path: '/about/leadership'
+      fullPath: '/about/leadership'
+      preLoaderRoute: typeof AboutLeadershipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/vision-mission': {
+      id: '/about/vision-mission'
+      path: '/about/vision-mission'
+      fullPath: '/about/vision-mission'
+      preLoaderRoute: typeof AboutVisionMissionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/who-we-are': {
+      id: '/about/who-we-are'
+      path: '/about/who-we-are'
+      fullPath: '/about/who-we-are'
+      preLoaderRoute: typeof AboutWhoWeAreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutLeadershipRoute: AboutLeadershipRoute,
+  AboutVisionMissionRoute: AboutVisionMissionRoute,
+  AboutWhoWeAreRoute: AboutWhoWeAreRoute,
+  AboutIndexRoute: AboutIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
