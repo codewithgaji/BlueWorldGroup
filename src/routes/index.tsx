@@ -1,24 +1,236 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { useState } from "react";
+import { HeroSlider } from "@/components/site/hero-slider";
+import { AppLink } from "@/components/site/app-link";
+import { BrandGlobe } from "@/components/brand/brand-globe";
+import {
+  CmsImage,
+  EmptyBlock,
+  LoadingBlock,
+  Section,
+  SectionHeading,
+} from "@/components/site/primitives";
+import { ProductCard } from "@/components/site/product-card";
+import { useBlogPosts, useBusinessUnits, useHeroSlides, useProducts } from "@/hooks/use-cms";
+import { ENDPOINTS, submitWithMock } from "@/lib/api";
+import { REACH_MARKERS } from "@/data/placeholder-content";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Blue World Cosmetics — Nigerian Cosmetics Manufacturer" },
+      {
+        name: "description",
+        content:
+          "Skincare, hygiene, haircare and fragrance manufactured in Lagos. Home of Vivon, BlueCrystal, Blow Right, BlueFragrance and BlueWorld Cosmetics.",
+      },
+      { property: "og:title", content: "Blue World Cosmetics" },
+      {
+        property: "og:description",
+        content: "Five brands. One Nigerian manufacturing house. God Is Our Strength.",
+      },
+    ],
+  }),
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function HomePage() {
+  const slides = useHeroSlides();
+  const units = useBusinessUnits();
+  const products = useProducts();
+  const posts = useBlogPosts();
+
+  const featured = (products.data ?? []).filter((p) => p.featured).slice(0, 4);
+  const latest = (posts.data ?? []).slice(0, 3);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      {slides.isLoading ? (
+        <div className="h-[70vh] animate-pulse bg-primary-deep" />
+      ) : (
+        <HeroSlider slides={slides.data ?? []} />
+      )}
+
+      {/* Globe section */}
+      <Section>
+        <div className="grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
+          <div className="flex justify-center">
+            <BrandGlobe size={340} markers={REACH_MARKERS} />
+          </div>
+          <div>
+            <SectionHeading
+              eyebrow="God Is Our Strength"
+              title="Made in Nigeria, carried around the world"
+              description="From our plant on Oba Akran Avenue, Blue World products reach households in Nigeria, Kenya, China and India. Spin the globe — every marker is a market our cartons land in."
+            />
+            <dl className="mt-10 grid grid-cols-2 gap-8 sm:grid-cols-4">
+              {[
+                { k: "1998", v: "Founded in Lagos" },
+                { k: "5", v: "Brands in the house" },
+                { k: "120+", v: "SKUs in production" },
+                { k: "4", v: "Countries reached" },
+              ].map((s) => (
+                <div key={s.k}>
+                  <dt className="font-display text-3xl font-extrabold text-accent">{s.k}</dt>
+                  <dd className="mt-1 text-sm text-muted-foreground">{s.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </Section>
+
+      {/* Business units — alternating image/text */}
+      <Section tone="muted">
+        <SectionHeading
+          eyebrow="Our business"
+          title="Five brands, built for different shelves"
+          description="Each unit runs its own formulation brief, packaging language and route to market — sharing one factory floor and one quality standard."
+        />
+        <div className="mt-16 space-y-20">
+          {units.isLoading && <LoadingBlock label="Loading business units…" />}
+          {!units.isLoading && (units.data ?? []).length === 0 && (
+            <EmptyBlock label="No business units published yet." />
+          )}
+          {(units.data ?? []).map((unit, i) => (
+            <motion.div
+              key={unit.id}
+              initial={{ opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.55 }}
+              className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-20 ${
+                i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
+              }`}
+            >
+              <div className="overflow-hidden rounded-3xl shadow-lift">
+                <CmsImage
+                  src={unit.heroImage}
+                  alt={unit.name}
+                  className="aspect-[4/3] w-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="eyebrow">{unit.tagline}</p>
+                <h3 className="mt-3 text-3xl font-extrabold text-primary-deep lg:text-4xl">
+                  {unit.name}
+                </h3>
+                <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+                  {unit.summary}
+                </p>
+                <AppLink
+                  href={`/business/${unit.slug}`}
+                  className="mt-8 inline-flex items-center rounded-full border-2 border-primary px-6 py-3 text-sm font-bold text-primary-deep transition-colors hover:bg-primary hover:text-primary-foreground"
+                >
+                  Visit {unit.name}
+                </AppLink>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Featured products */}
+      <Section>
+        <SectionHeading
+          eyebrow="Featured products"
+          title="What our lines are shipping right now"
+        />
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {products.isLoading && <LoadingBlock label="Loading products…" />}
+          {featured.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+      </Section>
+
+      {/* Latest posts */}
+      <Section tone="muted">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeading eyebrow="From the blog" title="News, research and factory notes" />
+          <AppLink
+            href="/blog"
+            className="rounded-full border-2 border-primary px-6 py-3 text-sm font-bold text-primary-deep transition-colors hover:bg-primary hover:text-primary-foreground"
+          >
+            All posts
+          </AppLink>
+        </div>
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
+          {latest.map((post) => (
+            <AppLink
+              key={post.id}
+              href={`/blog/${post.slug}`}
+              className="group block overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-all hover:-translate-y-1 hover:shadow-lift"
+            >
+              <div className="aspect-[16/10] overflow-hidden">
+                <CmsImage
+                  src={post.coverImage}
+                  alt={post.title}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-6">
+                <p className="eyebrow">{post.category}</p>
+                <h3 className="mt-3 text-lg font-bold leading-snug text-primary-deep">
+                  {post.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {post.excerpt}
+                </p>
+              </div>
+            </AppLink>
+          ))}
+        </div>
+      </Section>
+
+      <NewsletterBlock />
+    </>
+  );
+}
+
+function NewsletterBlock() {
+  const [email, setEmail] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  return (
+    <Section tone="deep">
+      <div className="grid items-center gap-10 lg:grid-cols-2">
+        <SectionHeading
+          invert
+          eyebrow="Newsletter"
+          title="Trade updates, new lines and factory news"
+          description="One email a month for distributors, retail partners and anyone who cares how the products are made."
+        />
+        <form
+          className="flex flex-col gap-3 sm:flex-row"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            setBusy(true);
+            await submitWithMock(ENDPOINTS.newsletter, { email }, { ok: true });
+            setBusy(false);
+            setEmail("");
+            toast.success("You're subscribed. Watch your inbox.");
+          }}
+        >
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@company.com"
+            className="h-14 flex-1 rounded-full border border-primary-foreground/25 bg-primary-foreground/10 px-6 text-sm text-primary-foreground placeholder:text-primary-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent"
+          />
+          <button
+            type="submit"
+            disabled={busy}
+            className="h-14 rounded-full bg-accent px-8 text-sm font-bold text-accent-foreground transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+          >
+            {busy ? "Subscribing…" : "Subscribe"}
+          </button>
+        </form>
+      </div>
+    </Section>
   );
 }
