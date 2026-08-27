@@ -10,14 +10,31 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CareerRouteImport } from './routes/career'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutIndexRouteImport } from './routes/about.index'
 import { Route as AboutLeadershipRouteImport } from './routes/about.leadership'
 import { Route as AboutVisionMissionRouteImport } from './routes/about.vision-mission'
 import { Route as AboutWhoWeAreRouteImport } from './routes/about.who-we-are'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as BusinessIndexRouteImport } from './routes/business.index'
+import { Route as BusinessUnitIndexRouteImport } from './routes/business.$unit.index'
+import { Route as BusinessUnitLineRouteImport } from './routes/business.$unit.$line'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerRoute = CareerRouteImport.update({
+  id: '/career',
+  path: '/career',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutIndexRoute = AboutIndexRouteImport.update({
@@ -40,59 +57,133 @@ const AboutWhoWeAreRoute = AboutWhoWeAreRouteImport.update({
   path: '/about/who-we-are',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessIndexRoute = BusinessIndexRouteImport.update({
+  id: '/business/',
+  path: '/business/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessUnitIndexRoute = BusinessUnitIndexRouteImport.update({
+  id: '/business/$unit/',
+  path: '/business/$unit/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessUnitLineRoute = BusinessUnitLineRouteImport.update({
+  id: '/business/$unit/$line',
+  path: '/business/$unit/$line',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/career': typeof CareerRoute
+  '/contact': typeof ContactRoute
   '/about/leadership': typeof AboutLeadershipRoute
   '/about/vision-mission': typeof AboutVisionMissionRoute
   '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/blog/': typeof BlogIndexRoute
+  '/business/': typeof BusinessIndexRoute
+  '/business/$unit/$line': typeof BusinessUnitLineRoute
+  '/business/$unit/': typeof BusinessUnitIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/career': typeof CareerRoute
+  '/contact': typeof ContactRoute
   '/about/leadership': typeof AboutLeadershipRoute
   '/about/vision-mission': typeof AboutVisionMissionRoute
   '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/about': typeof AboutIndexRoute
+  '/blog': typeof BlogIndexRoute
+  '/business': typeof BusinessIndexRoute
+  '/business/$unit/$line': typeof BusinessUnitLineRoute
+  '/business/$unit': typeof BusinessUnitIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/career': typeof CareerRoute
+  '/contact': typeof ContactRoute
   '/about/leadership': typeof AboutLeadershipRoute
   '/about/vision-mission': typeof AboutVisionMissionRoute
   '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/blog/': typeof BlogIndexRoute
+  '/business/': typeof BusinessIndexRoute
+  '/business/$unit/$line': typeof BusinessUnitLineRoute
+  '/business/$unit/': typeof BusinessUnitIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/career'
+    | '/contact'
     | '/about/leadership'
     | '/about/vision-mission'
     | '/about/who-we-are'
+    | '/blog/$slug'
     | '/about/'
+    | '/blog/'
+    | '/business/'
+    | '/business/$unit/$line'
+    | '/business/$unit/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/career'
+    | '/contact'
     | '/about/leadership'
     | '/about/vision-mission'
     | '/about/who-we-are'
+    | '/blog/$slug'
     | '/about'
+    | '/blog'
+    | '/business'
+    | '/business/$unit/$line'
+    | '/business/$unit'
   id:
     | '__root__'
     | '/'
+    | '/career'
+    | '/contact'
     | '/about/leadership'
     | '/about/vision-mission'
     | '/about/who-we-are'
+    | '/blog/$slug'
     | '/about/'
+    | '/blog/'
+    | '/business/'
+    | '/business/$unit/$line'
+    | '/business/$unit/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CareerRoute: typeof CareerRoute
+  ContactRoute: typeof ContactRoute
   AboutLeadershipRoute: typeof AboutLeadershipRoute
   AboutVisionMissionRoute: typeof AboutVisionMissionRoute
   AboutWhoWeAreRoute: typeof AboutWhoWeAreRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   AboutIndexRoute: typeof AboutIndexRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+  BusinessIndexRoute: typeof BusinessIndexRoute
+  BusinessUnitLineRoute: typeof BusinessUnitLineRoute
+  BusinessUnitIndexRoute: typeof BusinessUnitIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -102,6 +193,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career': {
+      id: '/career'
+      path: '/career'
+      fullPath: '/career'
+      preLoaderRoute: typeof CareerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about/': {
@@ -132,15 +237,57 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutWhoWeAreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business/': {
+      id: '/business/'
+      path: '/business'
+      fullPath: '/business/'
+      preLoaderRoute: typeof BusinessIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business/$unit/': {
+      id: '/business/$unit/'
+      path: '/business/$unit'
+      fullPath: '/business/$unit/'
+      preLoaderRoute: typeof BusinessUnitIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business/$unit/$line': {
+      id: '/business/$unit/$line'
+      path: '/business/$unit/$line'
+      fullPath: '/business/$unit/$line'
+      preLoaderRoute: typeof BusinessUnitLineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CareerRoute: CareerRoute,
+  ContactRoute: ContactRoute,
   AboutLeadershipRoute: AboutLeadershipRoute,
   AboutVisionMissionRoute: AboutVisionMissionRoute,
   AboutWhoWeAreRoute: AboutWhoWeAreRoute,
+  BlogSlugRoute: BlogSlugRoute,
   AboutIndexRoute: AboutIndexRoute,
+  BlogIndexRoute: BlogIndexRoute,
+  BusinessIndexRoute: BusinessIndexRoute,
+  BusinessUnitLineRoute: BusinessUnitLineRoute,
+  BusinessUnitIndexRoute: BusinessUnitIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
