@@ -16,6 +16,8 @@ import { Route as AboutIndexRouteImport } from './routes/about.index'
 import { Route as AboutLeadershipRouteImport } from './routes/about.leadership'
 import { Route as AboutVisionMissionRouteImport } from './routes/about.vision-mission'
 import { Route as AboutWhoWeAreRouteImport } from './routes/about.who-we-are'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
@@ -57,6 +59,16 @@ const AboutWhoWeAreRoute = AboutWhoWeAreRouteImport.update({
   path: '/about/who-we-are',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -90,8 +102,10 @@ export interface FileRoutesByFullPath {
   '/about/leadership': typeof AboutLeadershipRoute
   '/about/vision-mission': typeof AboutVisionMissionRoute
   '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/business/$unit/$line': typeof BusinessUnitLineRoute
@@ -104,8 +118,10 @@ export interface FileRoutesByTo {
   '/about/leadership': typeof AboutLeadershipRoute
   '/about/vision-mission': typeof AboutVisionMissionRoute
   '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/about': typeof AboutIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/business': typeof BusinessIndexRoute
   '/business/$unit/$line': typeof BusinessUnitLineRoute
@@ -119,8 +135,10 @@ export interface FileRoutesById {
   '/about/leadership': typeof AboutLeadershipRoute
   '/about/vision-mission': typeof AboutVisionMissionRoute
   '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/business/$unit/$line': typeof BusinessUnitLineRoute
@@ -135,8 +153,10 @@ export interface FileRouteTypes {
     | '/about/leadership'
     | '/about/vision-mission'
     | '/about/who-we-are'
+    | '/admin/login'
     | '/blog/$slug'
     | '/about/'
+    | '/admin/'
     | '/blog/'
     | '/business/'
     | '/business/$unit/$line'
@@ -149,8 +169,10 @@ export interface FileRouteTypes {
     | '/about/leadership'
     | '/about/vision-mission'
     | '/about/who-we-are'
+    | '/admin/login'
     | '/blog/$slug'
     | '/about'
+    | '/admin'
     | '/blog'
     | '/business'
     | '/business/$unit/$line'
@@ -163,8 +185,10 @@ export interface FileRouteTypes {
     | '/about/leadership'
     | '/about/vision-mission'
     | '/about/who-we-are'
+    | '/admin/login'
     | '/blog/$slug'
     | '/about/'
+    | '/admin/'
     | '/blog/'
     | '/business/'
     | '/business/$unit/$line'
@@ -178,8 +202,10 @@ export interface RootRouteChildren {
   AboutLeadershipRoute: typeof AboutLeadershipRoute
   AboutVisionMissionRoute: typeof AboutVisionMissionRoute
   AboutWhoWeAreRoute: typeof AboutWhoWeAreRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   BlogSlugRoute: typeof BlogSlugRoute
   AboutIndexRoute: typeof AboutIndexRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   BlogIndexRoute: typeof BlogIndexRoute
   BusinessIndexRoute: typeof BusinessIndexRoute
   BusinessUnitLineRoute: typeof BusinessUnitLineRoute
@@ -237,6 +263,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutWhoWeAreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -282,8 +322,10 @@ const rootRouteChildren: RootRouteChildren = {
   AboutLeadershipRoute: AboutLeadershipRoute,
   AboutVisionMissionRoute: AboutVisionMissionRoute,
   AboutWhoWeAreRoute: AboutWhoWeAreRoute,
+  AdminLoginRoute: AdminLoginRoute,
   BlogSlugRoute: BlogSlugRoute,
   AboutIndexRoute: AboutIndexRoute,
+  AdminIndexRoute: AdminIndexRoute,
   BlogIndexRoute: BlogIndexRoute,
   BusinessIndexRoute: BusinessIndexRoute,
   BusinessUnitLineRoute: BusinessUnitLineRoute,
