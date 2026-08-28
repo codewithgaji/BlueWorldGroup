@@ -16,6 +16,14 @@ import { Route as AboutIndexRouteImport } from './routes/about.index'
 import { Route as AboutLeadershipRouteImport } from './routes/about.leadership'
 import { Route as AboutVisionMissionRouteImport } from './routes/about.vision-mission'
 import { Route as AboutWhoWeAreRouteImport } from './routes/about.who-we-are'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminBlogRouteImport } from './routes/admin.blog'
+import { Route as AdminBusinessUnitsRouteImport } from './routes/admin.business-units'
+import { Route as AdminHeroSlidesRouteImport } from './routes/admin.hero-slides'
+import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminProductsRouteImport } from './routes/admin.products'
+import { Route as AdminTeamRouteImport } from './routes/admin.team'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
@@ -57,6 +65,46 @@ const AboutWhoWeAreRoute = AboutWhoWeAreRouteImport.update({
   path: '/about/who-we-are',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBlogRoute = AdminBlogRouteImport.update({
+  id: '/admin/blog',
+  path: '/admin/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBusinessUnitsRoute = AdminBusinessUnitsRouteImport.update({
+  id: '/admin/business-units',
+  path: '/admin/business-units',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminHeroSlidesRoute = AdminHeroSlidesRouteImport.update({
+  id: '/admin/hero-slides',
+  path: '/admin/hero-slides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminJobsRoute = AdminJobsRouteImport.update({
+  id: '/admin/jobs',
+  path: '/admin/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProductsRoute = AdminProductsRouteImport.update({
+  id: '/admin/products',
+  path: '/admin/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: '/admin/team',
+  path: '/admin/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -90,8 +138,16 @@ export interface FileRoutesByFullPath {
   '/about/leadership': typeof AboutLeadershipRoute
   '/about/vision-mission': typeof AboutVisionMissionRoute
   '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/business-units': typeof AdminBusinessUnitsRoute
+  '/admin/hero-slides': typeof AdminHeroSlidesRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/products': typeof AdminProductsRoute
+  '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/business/$unit/$line': typeof BusinessUnitLineRoute
@@ -104,8 +160,16 @@ export interface FileRoutesByTo {
   '/about/leadership': typeof AboutLeadershipRoute
   '/about/vision-mission': typeof AboutVisionMissionRoute
   '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/business-units': typeof AdminBusinessUnitsRoute
+  '/admin/hero-slides': typeof AdminHeroSlidesRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/products': typeof AdminProductsRoute
+  '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/about': typeof AboutIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/business': typeof BusinessIndexRoute
   '/business/$unit/$line': typeof BusinessUnitLineRoute
@@ -119,8 +183,16 @@ export interface FileRoutesById {
   '/about/leadership': typeof AboutLeadershipRoute
   '/about/vision-mission': typeof AboutVisionMissionRoute
   '/about/who-we-are': typeof AboutWhoWeAreRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/business-units': typeof AdminBusinessUnitsRoute
+  '/admin/hero-slides': typeof AdminHeroSlidesRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/products': typeof AdminProductsRoute
+  '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/business/$unit/$line': typeof BusinessUnitLineRoute
@@ -135,8 +207,16 @@ export interface FileRouteTypes {
     | '/about/leadership'
     | '/about/vision-mission'
     | '/about/who-we-are'
+    | '/admin/blog'
+    | '/admin/business-units'
+    | '/admin/hero-slides'
+    | '/admin/jobs'
+    | '/admin/login'
+    | '/admin/products'
+    | '/admin/team'
     | '/blog/$slug'
     | '/about/'
+    | '/admin/'
     | '/blog/'
     | '/business/'
     | '/business/$unit/$line'
@@ -149,8 +229,16 @@ export interface FileRouteTypes {
     | '/about/leadership'
     | '/about/vision-mission'
     | '/about/who-we-are'
+    | '/admin/blog'
+    | '/admin/business-units'
+    | '/admin/hero-slides'
+    | '/admin/jobs'
+    | '/admin/login'
+    | '/admin/products'
+    | '/admin/team'
     | '/blog/$slug'
     | '/about'
+    | '/admin'
     | '/blog'
     | '/business'
     | '/business/$unit/$line'
@@ -163,8 +251,16 @@ export interface FileRouteTypes {
     | '/about/leadership'
     | '/about/vision-mission'
     | '/about/who-we-are'
+    | '/admin/blog'
+    | '/admin/business-units'
+    | '/admin/hero-slides'
+    | '/admin/jobs'
+    | '/admin/login'
+    | '/admin/products'
+    | '/admin/team'
     | '/blog/$slug'
     | '/about/'
+    | '/admin/'
     | '/blog/'
     | '/business/'
     | '/business/$unit/$line'
@@ -178,8 +274,16 @@ export interface RootRouteChildren {
   AboutLeadershipRoute: typeof AboutLeadershipRoute
   AboutVisionMissionRoute: typeof AboutVisionMissionRoute
   AboutWhoWeAreRoute: typeof AboutWhoWeAreRoute
+  AdminBlogRoute: typeof AdminBlogRoute
+  AdminBusinessUnitsRoute: typeof AdminBusinessUnitsRoute
+  AdminHeroSlidesRoute: typeof AdminHeroSlidesRoute
+  AdminJobsRoute: typeof AdminJobsRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminProductsRoute: typeof AdminProductsRoute
+  AdminTeamRoute: typeof AdminTeamRoute
   BlogSlugRoute: typeof BlogSlugRoute
   AboutIndexRoute: typeof AboutIndexRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   BlogIndexRoute: typeof BlogIndexRoute
   BusinessIndexRoute: typeof BusinessIndexRoute
   BusinessUnitLineRoute: typeof BusinessUnitLineRoute
@@ -237,6 +341,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutWhoWeAreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/blog': {
+      id: '/admin/blog'
+      path: '/admin/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AdminBlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/business-units': {
+      id: '/admin/business-units'
+      path: '/admin/business-units'
+      fullPath: '/admin/business-units'
+      preLoaderRoute: typeof AdminBusinessUnitsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/hero-slides': {
+      id: '/admin/hero-slides'
+      path: '/admin/hero-slides'
+      fullPath: '/admin/hero-slides'
+      preLoaderRoute: typeof AdminHeroSlidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/jobs': {
+      id: '/admin/jobs'
+      path: '/admin/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof AdminJobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/products': {
+      id: '/admin/products'
+      path: '/admin/products'
+      fullPath: '/admin/products'
+      preLoaderRoute: typeof AdminProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/team': {
+      id: '/admin/team'
+      path: '/admin/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -282,8 +442,16 @@ const rootRouteChildren: RootRouteChildren = {
   AboutLeadershipRoute: AboutLeadershipRoute,
   AboutVisionMissionRoute: AboutVisionMissionRoute,
   AboutWhoWeAreRoute: AboutWhoWeAreRoute,
+  AdminBlogRoute: AdminBlogRoute,
+  AdminBusinessUnitsRoute: AdminBusinessUnitsRoute,
+  AdminHeroSlidesRoute: AdminHeroSlidesRoute,
+  AdminJobsRoute: AdminJobsRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminProductsRoute: AdminProductsRoute,
+  AdminTeamRoute: AdminTeamRoute,
   BlogSlugRoute: BlogSlugRoute,
   AboutIndexRoute: AboutIndexRoute,
+  AdminIndexRoute: AdminIndexRoute,
   BlogIndexRoute: BlogIndexRoute,
   BusinessIndexRoute: BusinessIndexRoute,
   BusinessUnitLineRoute: BusinessUnitLineRoute,
