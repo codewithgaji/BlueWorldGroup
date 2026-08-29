@@ -68,7 +68,10 @@ function hydrate() {
   hydrated = true;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (raw) state = { ...INITIAL, ...(JSON.parse(raw) as Partial<CmsState>) };
+    if (raw) {
+      state = { ...INITIAL, ...(JSON.parse(raw) as Partial<CmsState>) };
+      revision += 1;
+    }
   } catch {
     /* corrupt draft -> keep seeded content */
   }
