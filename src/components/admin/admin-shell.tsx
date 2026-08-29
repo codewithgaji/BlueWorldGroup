@@ -12,7 +12,7 @@ import {
   Users,
   Briefcase,
 } from "lucide-react";
-import { logout, useAdminUser } from "@/hooks/use-admin-auth";
+import { getAdminUser, logout, useAdminUser } from "@/hooks/use-admin-auth";
 import { cn } from "@/lib/utils";
 
 export const ADMIN_NAV = [
@@ -48,10 +48,12 @@ export function AdminShell({
   useEffect(() => setHydrated(true), []);
 
   useEffect(() => {
-    if (hydrated && !user) void navigate({ to: "/admin/login" });
+    if (hydrated && !user && !getAdminUser()) void navigate({ to: "/admin/login" });
   }, [hydrated, user, navigate]);
 
-  if (!user) {
+  const session = user ?? (hydrated ? getAdminUser() : null);
+
+  if (!session) {
     return (
       <div className="grid min-h-screen place-items-center bg-secondary text-sm text-muted-foreground">
         Checking your session…
@@ -107,8 +109,8 @@ export function AdminShell({
           <div className="flex items-center gap-3">
             {actions}
             <div className="hidden text-right sm:block">
-              <p className="text-sm font-semibold text-primary-deep">{user.fullName}</p>
-              <p className="text-xs uppercase tracking-[0.14em] text-accent">{user.role}</p>
+              <p className="text-sm font-semibold text-primary-deep">{session.fullName}</p>
+              <p className="text-xs uppercase tracking-[0.14em] text-accent">{session.role}</p>
             </div>
             <button
               type="button"
