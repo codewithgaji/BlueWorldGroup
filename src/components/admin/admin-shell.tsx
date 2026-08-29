@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Images,
@@ -12,7 +12,7 @@ import {
   Users,
   Briefcase,
 } from "lucide-react";
-import { logout, useAdminUser } from "@/hooks/use-admin-auth";
+import { getAdminUser, logout, useAdminUser } from "@/hooks/use-admin-auth";
 import { cn } from "@/lib/utils";
 
 export const ADMIN_NAV = [
@@ -42,11 +42,18 @@ export function AdminShell({
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
-  useEffect(() => {
-    if (!user) void navigate({ to: "/admin/login" });
-  }, [user, navigate]);
+  // The session lives in localStorage, so it is only readable after hydration —
+  // redirecting before that would bounce a signed-in admin to the login screen.
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
 
-  if (!user) {
+  useEffect(() => {
+    if (hydrated && !user && !getAdminUser()) void navigate({ to: "/admin/login" });
+  }, [hydrated, user, navigate]);
+
+  const session = user ?? (hydrated ? getAdminUser() : null);
+
+  if (!session) {
     return (
       <div className="grid min-h-screen place-items-center bg-secondary text-sm text-muted-foreground">
         Checking your session…
@@ -102,8 +109,8 @@ export function AdminShell({
           <div className="flex items-center gap-3">
             {actions}
             <div className="hidden text-right sm:block">
-              <p className="text-sm font-semibold text-primary-deep">{user.fullName}</p>
-              <p className="text-xs uppercase tracking-[0.14em] text-accent">{user.role}</p>
+              <p className="text-sm font-semibold text-primary-deep">{session.fullName}</p>
+              <p className="text-xs uppercase tracking-[0.14em] text-accent">{session.role}</p>
             </div>
             <button
               type="button"

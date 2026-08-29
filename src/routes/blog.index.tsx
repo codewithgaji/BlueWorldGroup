@@ -10,7 +10,7 @@ import {
 import { useBlogPosts } from "@/hooks/use-cms";
 import { cn } from "@/lib/utils";
 
-type BlogSearch = { category?: string };
+type BlogSearch = { category?: string | undefined };
 
 export const Route = createFileRoute("/blog/")({
   validateSearch: (search: Record<string, unknown>): BlogSearch => ({

@@ -24,9 +24,12 @@ function AdminLoginPage() {
   const [password, setPassword] = useState(DEMO_CREDENTIALS.password);
   const [busy, setBusy] = useState(false);
 
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+
   useEffect(() => {
-    if (user) void navigate({ to: "/admin" });
-  }, [user, navigate]);
+    if (hydrated && user) void navigate({ to: "/admin" });
+  }, [hydrated, user, navigate]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

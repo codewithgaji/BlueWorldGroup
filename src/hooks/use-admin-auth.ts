@@ -45,6 +45,11 @@ function emit() {
   listeners.forEach((l) => l());
 }
 
+/** Direct (non-reactive) session read — safe to call inside effects after mount. */
+export function getAdminUser(): AdminUser | null {
+  return read();
+}
+
 export function useAdminUser(): AdminUser | null {
   return useSyncExternalStore(
     (l) => {

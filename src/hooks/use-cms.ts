@@ -4,16 +4,7 @@
  */
 import { useQuery } from "@tanstack/react-query";
 import { ENDPOINTS, fetchWithFallback } from "@/lib/api";
-import {
-  BLOG_POSTS,
-  BUSINESS_UNITS,
-  HERO_SLIDES,
-  JOB_POSTINGS,
-  MEDIA_LIBRARY,
-  PRODUCTS,
-  SITE_SETTINGS,
-  TEAM_MEMBERS,
-} from "@/data/placeholder-content";
+import { useCmsRevision, useCmsState } from "@/lib/cms-store";
 import type {
   BlogPost,
   BusinessUnit,
@@ -28,17 +19,21 @@ import type {
 const COMMON = { staleTime: 5 * 60_000, retry: 0 } as const;
 
 export function useHeroSlides() {
+  const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "hero-slides"],
-    queryFn: () => fetchWithFallback<HeroSlide[]>(ENDPOINTS.heroSlides, HERO_SLIDES),
+    queryKey: ["cms", "hero-slides", rev],
+    queryFn: () => fetchWithFallback<HeroSlide[]>(ENDPOINTS.heroSlides, cms.heroSlides),
     ...COMMON,
   });
 }
 
 export function useBusinessUnits() {
+  const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "business-units"],
-    queryFn: () => fetchWithFallback<BusinessUnit[]>(ENDPOINTS.businessUnits, BUSINESS_UNITS),
+    queryKey: ["cms", "business-units", rev],
+    queryFn: () => fetchWithFallback<BusinessUnit[]>(ENDPOINTS.businessUnits, cms.businessUnits),
     ...COMMON,
   });
 }
@@ -49,49 +44,61 @@ export function useBusinessUnit(slug: string) {
 }
 
 export function useProducts() {
+  const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "products"],
-    queryFn: () => fetchWithFallback<Product[]>(ENDPOINTS.products, PRODUCTS),
+    queryKey: ["cms", "products", rev],
+    queryFn: () => fetchWithFallback<Product[]>(ENDPOINTS.products, cms.products),
     ...COMMON,
   });
 }
 
 export function useTeamMembers() {
+  const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "team"],
-    queryFn: () => fetchWithFallback<TeamMember[]>(ENDPOINTS.teamMembers, TEAM_MEMBERS),
+    queryKey: ["cms", "team", rev],
+    queryFn: () => fetchWithFallback<TeamMember[]>(ENDPOINTS.teamMembers, cms.teamMembers),
     ...COMMON,
   });
 }
 
 export function useBlogPosts() {
+  const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "blog-posts"],
-    queryFn: () => fetchWithFallback<BlogPost[]>(ENDPOINTS.blogPosts, BLOG_POSTS),
+    queryKey: ["cms", "blog-posts", rev],
+    queryFn: () => fetchWithFallback<BlogPost[]>(ENDPOINTS.blogPosts, cms.blogPosts),
     ...COMMON,
   });
 }
 
 export function useJobPostings() {
+  const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "jobs"],
-    queryFn: () => fetchWithFallback<JobPosting[]>(ENDPOINTS.jobPostings, JOB_POSTINGS),
+    queryKey: ["cms", "jobs", rev],
+    queryFn: () => fetchWithFallback<JobPosting[]>(ENDPOINTS.jobPostings, cms.jobPostings),
     ...COMMON,
   });
 }
 
 export function useSiteSettings() {
+  const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "settings"],
-    queryFn: () => fetchWithFallback<SiteSettings>(ENDPOINTS.settings, SITE_SETTINGS),
+    queryKey: ["cms", "settings", rev],
+    queryFn: () => fetchWithFallback<SiteSettings>(ENDPOINTS.settings, cms.settings),
     ...COMMON,
   });
 }
 
 export function useMediaLibrary() {
+  const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "media"],
-    queryFn: () => fetchWithFallback<MediaAsset[]>(ENDPOINTS.media, MEDIA_LIBRARY),
+    queryKey: ["cms", "media", rev],
+    queryFn: () => fetchWithFallback<MediaAsset[]>(ENDPOINTS.media, cms.mediaLibrary),
     ...COMMON,
   });
 }
