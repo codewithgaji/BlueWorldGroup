@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Images,
@@ -42,9 +42,14 @@ export function AdminShell({
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
+  // The session lives in localStorage, so it is only readable after hydration —
+  // redirecting before that would bounce a signed-in admin to the login screen.
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+
   useEffect(() => {
-    if (!user) void navigate({ to: "/admin/login" });
-  }, [user, navigate]);
+    if (hydrated && !user) void navigate({ to: "/admin/login" });
+  }, [hydrated, user, navigate]);
 
   if (!user) {
     return (
