@@ -114,7 +114,10 @@ export function useCmsState(): CmsState {
 export function useCmsRevision(): number {
   return useSyncExternalStore(
     subscribe,
-    () => revision,
+    () => {
+      hydrate();
+      return revision;
+    },
     () => 0,
   );
 }
