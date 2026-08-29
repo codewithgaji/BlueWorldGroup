@@ -4,7 +4,7 @@
  */
 import { useQuery } from "@tanstack/react-query";
 import { ENDPOINTS, fetchWithFallback } from "@/lib/api";
-import { useCmsState } from "@/lib/cms-store";
+import { useCmsRevision, useCmsState } from "@/lib/cms-store";
 import type {
   BlogPost,
   BusinessUnit,
@@ -20,8 +20,9 @@ const COMMON = { staleTime: 5 * 60_000, retry: 0 } as const;
 
 export function useHeroSlides() {
   const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "hero-slides"],
+    queryKey: ["cms", "hero-slides", rev],
     queryFn: () => fetchWithFallback<HeroSlide[]>(ENDPOINTS.heroSlides, cms.heroSlides),
     ...COMMON,
   });
@@ -29,8 +30,9 @@ export function useHeroSlides() {
 
 export function useBusinessUnits() {
   const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "business-units"],
+    queryKey: ["cms", "business-units", rev],
     queryFn: () => fetchWithFallback<BusinessUnit[]>(ENDPOINTS.businessUnits, cms.businessUnits),
     ...COMMON,
   });
@@ -43,8 +45,9 @@ export function useBusinessUnit(slug: string) {
 
 export function useProducts() {
   const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "products"],
+    queryKey: ["cms", "products", rev],
     queryFn: () => fetchWithFallback<Product[]>(ENDPOINTS.products, cms.products),
     ...COMMON,
   });
@@ -52,8 +55,9 @@ export function useProducts() {
 
 export function useTeamMembers() {
   const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "team"],
+    queryKey: ["cms", "team", rev],
     queryFn: () => fetchWithFallback<TeamMember[]>(ENDPOINTS.teamMembers, cms.teamMembers),
     ...COMMON,
   });
@@ -61,8 +65,9 @@ export function useTeamMembers() {
 
 export function useBlogPosts() {
   const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "blog-posts"],
+    queryKey: ["cms", "blog-posts", rev],
     queryFn: () => fetchWithFallback<BlogPost[]>(ENDPOINTS.blogPosts, cms.blogPosts),
     ...COMMON,
   });
@@ -70,8 +75,9 @@ export function useBlogPosts() {
 
 export function useJobPostings() {
   const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "jobs"],
+    queryKey: ["cms", "jobs", rev],
     queryFn: () => fetchWithFallback<JobPosting[]>(ENDPOINTS.jobPostings, cms.jobPostings),
     ...COMMON,
   });
@@ -79,8 +85,9 @@ export function useJobPostings() {
 
 export function useSiteSettings() {
   const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "settings"],
+    queryKey: ["cms", "settings", rev],
     queryFn: () => fetchWithFallback<SiteSettings>(ENDPOINTS.settings, cms.settings),
     ...COMMON,
   });
@@ -88,8 +95,9 @@ export function useSiteSettings() {
 
 export function useMediaLibrary() {
   const cms = useCmsState();
+  const rev = useCmsRevision();
   return useQuery({
-    queryKey: ["cms", "media"],
+    queryKey: ["cms", "media", rev],
     queryFn: () => fetchWithFallback<MediaAsset[]>(ENDPOINTS.media, cms.mediaLibrary),
     ...COMMON,
   });

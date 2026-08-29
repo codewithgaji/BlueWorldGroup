@@ -56,6 +56,7 @@ const INITIAL: CmsState = {
 
 let state: CmsState = INITIAL;
 let hydrated = false;
+let revision = 0;
 const listeners = new Set<() => void>();
 
 function emit() {
@@ -84,6 +85,7 @@ function persist() {
 
 function setState(next: CmsState) {
   state = next;
+  revision += 1;
   persist();
   emit();
 }
@@ -102,6 +104,15 @@ export function useCmsState(): CmsState {
       return state;
     },
     () => INITIAL,
+  );
+}
+
+/** Increments on every local edit — used to bust the query cache. */
+export function useCmsRevision(): number {
+  return useSyncExternalStore(
+    subscribe,
+    () => revision,
+    () => 0,
   );
 }
 
