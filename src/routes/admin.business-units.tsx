@@ -49,7 +49,7 @@ function BusinessUnitsAdmin() {
         emptyItem={() =>
           ({
             id: newId("bu"),
-            slug: "new-brand",
+            slug: "vivon",
             name: "",
             tagline: "",
             summary: "",
